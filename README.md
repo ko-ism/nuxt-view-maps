@@ -1,6 +1,6 @@
 # nuxt-view-maps
 
-> My shining Nuxt.js project
+> Nuxt.jsを利用して、Google Maps表示
 
 ## Build Setup
 
