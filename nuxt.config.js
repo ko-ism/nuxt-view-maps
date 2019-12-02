@@ -40,7 +40,8 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    // '@google/maps',
   ],
   /*
   ** Axios module configuration
