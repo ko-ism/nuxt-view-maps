@@ -14,18 +14,53 @@
       </tr>
     </table>
   </div> -->
-  <div id="map">{{ view_address_lists }}</div>
+  <!-- <div id="map">{{ view_address_lists }}</div> -->
+  <div>{{ view_address_lists }}
+    <GmapMap
+    v-bind:center="center"
+    v-bind:zoom="zoom"
+    style="width: 500px; height: 500px"
+    >
+    <GmapMarker
+      v-bind:key="index"
+
+      v-for="(m, index) in view_address_lists"
+        v-bind:position="{lat: m.lat , lng: m.lng}"
+        v-bind:title="m.name"
+        v-bind:clickable="true"
+        v-bind:draggable="true"
+        @click="center={lat: m.lat , lng: m.lng}"
+    />
+    </GmapMap>
+</div>
+  
   
 </template>
 
 <script>
   // import googleMapsClient from '@google/maps'
+  import {gmapApi} from 'vue2-google-maps'
   export default {
     data: function() {
       return {
-        name: '',
-        lat: 0,
-        lng: 0
+
+        // center: {lat: 35.71, lng: 139.72},
+        center: {lat: 35.6553809, lng: 139.7571289},
+        zoom: 13,
+        infoWindowPos: null,
+        infoWinOpen: false,
+        infoContent: {
+        imageurl: null,
+        title: null,
+        address: null
+        }
+
+        // markers: [
+        // {position: {lat: 35.71, lng: 139.72}, title: 'marker_1'},
+        // {position: {lat: 35.72, lng: 139.73}, title: 'marker_2'},
+        // {position: {lat: 35.70, lng: 139.71}, title: 'marker_3'},
+        // {position: {lat: 35.71, lng: 139.70}, title: 'marker_4'}
+        // ]
       }
 
     },
@@ -40,12 +75,13 @@
     computed: {
       view_address_lists() {
         return this.$store.state.view_maps.all_data
-      }
+      },
+      google: gmapApi
     }
   }
 
   export const view_google_maps = (data) => {
-    alert(data);
+    // alert(data);
   //   // var infowindow = new google.maps.InfoWindow();
   //   var hamamatsu_station = {lat: 35.6553809, lng: 139.7571289};
   //   var tokyo_station = {lat: 35.68123620000001, lng: 139.76712480000003};

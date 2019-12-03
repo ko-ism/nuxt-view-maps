@@ -57,6 +57,8 @@ export default {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
-    }
-  }
+    },
+    vendor: ["vue2-google-maps"]
+  },
+  plugins: [{src: "~/plugins/vue2-google-maps.js"}]
 }
