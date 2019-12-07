@@ -6,17 +6,62 @@ const db = firebase.firestore()
 const dataRef = db.collection(process.env.FIRESTORE_COLLECTION_NAME)
 
 export const state = () => ({
-  all_data: []
+  all_data: [],
+  searched_data: [],
+  counter: 0
 })
+
+export const mutations = {
+  increment (state) {
+    state.counter++
+  },
+  add_searched_data (state, data){
+    state.searched_data = [];
+    state.searched_data.push(data);
+  }
+}
 
 export const actions = {
   init: firestoreAction(({ bindFirestoreRef }) => {
     bindFirestoreRef('all_data', dataRef)
-  })
+  }),
+  search: firestoreAction((context, id) => {
+    dataRef.where('address_id', '==', id).get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        console.log('No matching documents.');
+        return;
+      }  
+      snapshot.forEach(doc => {
+        // console.log(doc.id, '=>', doc.data());
+        console.log(doc.data().address_id);
+        // this.add_searched_id(doc.data().address_id);
+        context.commit('add_searched_data', doc.data())
+        // state.searched_id.push(doc.data().address_id);
+      });
+    })
+    .catch(err => {
+      console.log('Error getting documents', err);
+    });
+  }),
 }
 
-// export const googleMapsClient = require('@google/maps').createClient({
-// export const googleMapsClient = googlemaps.createClient({
-//   key: process.env.GOOGLE_MAPS_API_KEY,
-//   Promise: Promise
-// })
+export const getters = {
+  getAllData: state => {
+    return state.all_data
+  },
+  getSearchedData: state => {
+    // return state.all_data.filter(getSearchedData => getSearchedData.title == "蒙古タンメン中本 品川店")
+    // return state.all_data.filter(data => data.title == "蒙古タンメン中本 品川店")
+    let result = state.all_data.find(data => data.title.indexOf("目黒") != -1);
+    console.log(result);
+    return result
+    // return state.all_data.find(data => data.title.indexOf("渋谷") != -1)
+  },
+  getCount: state => {
+    return state.counter
+  },
+  getSearchResult: state => {
+    return state.searched_data
+  }
+}
