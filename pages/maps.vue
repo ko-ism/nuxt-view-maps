@@ -1,37 +1,33 @@
 <template>
-  <!-- <div>
-    {{ view_address_lists }}
-    <table>
-      <tr>
-        <th>name</th>
-        <th>lat(緯度)</th>
-        <th>lng(経度)</th>
-      </tr>
-      <tr v-for="address in view_address_lists" :key="address.id">
-        <td>{{address.name}}</td>
-        <td>{{address.lat}}</td>
-        <td> {{address.lng}}</td>
-      </tr>
-    </table>
-  </div> -->
-  <!-- <div id="map">{{ view_address_lists }}</div> -->
-  <div>{{ view_address_lists }}
+  <div class="map">{{ view_address_lists }}
     <GmapMap
-    v-bind:center="center"
-    v-bind:zoom="zoom"
-    style="width: 500px; height: 500px"
-    >
-    <GmapMarker
-      v-bind:key="index"
+      v-bind:center="center"
+      v-bind:zoom="zoom"
+      style="width: 500px; height: 500px"
+      >
+      <GmapMarker
+        v-bind:key="index"
 
-      v-for="(m, index) in view_address_lists"
-        v-bind:position="{lat: m.lat , lng: m.lng}"
-        v-bind:title="m.name"
-        v-bind:clickable="true"
-        v-bind:draggable="true"
-        @click="center={lat: m.lat , lng: m.lng}"
-    />
+        v-for="(m, index) in view_address_lists"
+          v-bind:position="{lat: m.lat , lng: m.lng}"
+          v-bind:title="m.name"
+          v-bind:clickable="true"
+          v-bind:draggable="true"
+          v-on:click="view_infowin(m.name, m.lat, m.lng)"
+      /> 
+
+      <GmapInfoWindow
+          v-bind:options="infoOptions"
+          v-bind:position="infoWindowPos"
+          v-bind:opened="infoWinOpen"
+          @closeclick="infoWinOpen=false"
+        >
+          <div class="infoWin" v-html="infoContent"></div>
+      </GmapInfoWindow>
+
     </GmapMap>
+
+
 </div>
   
   
@@ -53,6 +49,12 @@
         imageurl: null,
         title: null,
         address: null
+        },
+        infoOptions: {
+          pixelOffset: {
+            width: 0,
+            height: -35
+          }
         }
 
         // markers: [
@@ -71,6 +73,16 @@
       view_google_maps(this.$store.state.view_maps.all_data)
     },
     methods: {
+      view_infowin(title, lat, lng) {
+        this.center = {lat: lat , lng: lng};
+        this.infoWindowPos = {lat: lat , lng: lng};
+        this.infoWinOpen = true;
+        this.infoContent = '<table>' +  
+          '<tr><th>title</th><td>' + title + '</td></tr>' + 
+          '<tr><th>画像</th><td>' + '<img src="./google.png" width="24" height="24" alt="home" />' + '</td></tr>' +
+          '<tr><th>URL</th><td>' + '<a href="http://www.google.com/">Google</a>' + '</td></tr></table>';
+      },
+
     },
     computed: {
       view_address_lists() {
@@ -103,53 +115,30 @@
 
 
 <style>
-table {
-  width: 70%;
-  border-collapse:separate;
-  border-spacing: 0;
+.infoWin{
+width: 100%;
+border-collapse: separate;
+border-spacing: 0px;
+border-top: 1px solid #ccc;
+border-left: 1px solid #ccc;
 }
-
-table th:first-child{
-  border-radius: 5px 0 0 0;
+.infoWin th{
+width:25%;
+padding:10px;
+text-align: left;
+vertical-align: top;
+color: #444;
+background-color: #cee7ff;
+border-left: 3px double #999;
+border-top: 1px solid #fff;
+border-right: 1px solid #8fd2ed;
+border-bottom: 1px solid #ccc;
 }
-
-table th:last-child{
-  border-radius: 0 5px 0 0;
-  border-right: 1px solid #3c6690;
-}
-
-table th{
-  text-align: center;
-  color:white;
-  background: linear-gradient(#829ebc,#225588);
-  border-left: 1px solid #3c6690;
-  border-top: 1px solid #3c6690;
-  border-bottom: 1px solid #3c6690;
-  box-shadow: 0px 1px 1px rgba(255,255,255,0.3) inset;
-  width: 10%;
-  padding: 10px 0;
-}
-
-table td{
-  text-align: center;
-  border-left: 1px solid #a8b7c5;
-  border-bottom: 1px solid #a8b7c5;
-  border-top:none;
-  box-shadow: 0px -3px 5px 1px #eee inset;
-  width: 10%;
-  padding: 10px 0;
-}
-
-
-table td:last-child{
-  border-right: 1px solid #a8b7c5;
-}
-
-table tr:last-child td:first-child {
-  border-radius: 0 0 0 5px;
-}
-
-table tr:last-child td:last-child {
-  border-radius: 0 0 5px 0;
+.infoWin td{
+width:75%;
+padding:10px;
+background-color: #fafafa;
+border-right: 1px solid #ccc;
+border-bottom: 1px solid #ccc;
 }
 </style>
