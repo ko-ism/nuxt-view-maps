@@ -2,6 +2,11 @@
 
 > Nuxt.jsを利用して、Google Maps表示
 
++ Map表示
++ MarkerをFirestoreのデータから取得
++ Markerをクリックすると情報がPopup（InfoWindow）
+
+
 ## Build Setup
 
 ``` bash
