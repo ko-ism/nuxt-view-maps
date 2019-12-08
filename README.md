@@ -3,13 +3,14 @@
 > Nuxt.jsを利用して、Google Maps表示
 
 ### Map表示機能
-+ Map表示
-+ MarkerをFirestoreのデータから取得
-+ Markerをクリックすると情報がPopup（InfoWindow）
++ Map表示機能
++ MarkerをFirestoreのデータから取得する機能
++ Markerをクリックすると情報がPopup（InfoWindow）する機能
 
 ### 検索機能
-+ IDからマーカーを検索機能
-
++ IDからFirestore上にあるデータを検索する機能
++ 検索結果を表形式で表示する機能
++ 対象のマーカーを表示する機能
 
 ## Build Setup
 
