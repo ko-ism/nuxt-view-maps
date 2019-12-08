@@ -26,6 +26,7 @@
 
 
     <nuxt-link to="/maps">検索結果地図表示</nuxt-link>
+    <nuxt-link to="/search">検索画面に戻る</nuxt-link>
   </div>
   
 </template>

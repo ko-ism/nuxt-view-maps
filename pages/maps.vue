@@ -31,6 +31,8 @@
       </GmapInfoWindow>
 
     </GmapMap>
+    <nuxt-link to="/search">検索画面に戻る</nuxt-link>
+
 
 
 </div>
@@ -104,7 +106,7 @@
       google: gmapApi
     }
   }
-
+  
 
 </script>
 

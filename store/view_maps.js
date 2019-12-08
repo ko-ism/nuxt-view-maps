@@ -15,8 +15,10 @@ export const mutations = {
   increment (state) {
     state.counter++
   },
-  add_searched_data (state, data){
+  clear_searched_data (state){
     state.searched_data = [];
+  },
+  add_searched_data (state, data){
     state.searched_data.push(data);
   }
 }
@@ -26,6 +28,7 @@ export const actions = {
     bindFirestoreRef('all_data', dataRef)
   }),
   search: firestoreAction((context, id) => {
+    context.commit('clear_searched_data')
     dataRef.where('address_id', '==', id).get()
     .then(snapshot => {
       if (snapshot.empty) {
@@ -35,6 +38,27 @@ export const actions = {
       snapshot.forEach(doc => {
         // console.log(doc.id, '=>', doc.data());
         console.log(doc.data().address_id);
+        // this.add_searched_id(doc.data().address_id);
+        context.commit('add_searched_data', doc.data())
+        // state.searched_id.push(doc.data().address_id);
+      });
+    })
+    .catch(err => {
+      console.log('Error getting documents', err);
+    });
+  }),
+  search_title: firestoreAction((context, title) => {
+    context.commit('clear_searched_data')
+    console.log(title);
+    dataRef.where('title', '==', title).get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        console.log('No matching documents.');
+        return;
+      }  
+      snapshot.forEach(doc => {
+        // console.log(doc.id, '=>', doc.data());
+        console.log(doc.data().title);
         // this.add_searched_id(doc.data().address_id);
         context.commit('add_searched_data', doc.data())
         // state.searched_id.push(doc.data().address_id);
