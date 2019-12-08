@@ -1,9 +1,9 @@
 <template>
   <div class="map">
-    <form id="search" @submit.prevent="search"><input type="text" v-model.number="searched_id"><input type="submit"></form>
-    <button v-on:click="clickevent">push</button>{{view_counts}}
-    <button v-on:click="search(2)">search</button>{{view_search_result}}
-    <!-- {{ view_searched_lists }} -->
+    <!-- <form id="search" @submit.prevent="search"><input type="text" v-model.number="searched_id"><input type="submit"></form> -->
+    <!-- <button v-on:click="clickevent">push</button>{{view_counts}} -->
+    <!-- <button v-on:click="search(2)">search</button>{{view_search_result}} -->
+    {{ view_search_result }}
     <GmapMap
       v-bind:center="center"
       v-bind:zoom="zoom"
@@ -58,7 +58,6 @@
             height: -35
           }
         },
-        searched_id: 0
       }
 
     },
