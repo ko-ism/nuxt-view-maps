@@ -1,7 +1,7 @@
 <template>
   <div class="map">
     ID検索<input type="text" v-model.number="searched_id">
-    <nuxt-link @click.native="search" to="/search_result">検索実行</nuxt-link>
+    <nuxt-link @click.native="search_id" to="/search_result">検索実行</nuxt-link>
     <p>まだIDは1,2,3のどれかしかない。</p>
     タイトル検索<input type="text" v-model="searched_title">
     <nuxt-link @click.native="search_title" to="/search_result">検索実行</nuxt-link>
@@ -28,9 +28,9 @@
       
     },
     methods: {
-      search(event){
+      search_id(event){
         const id = this.searched_id
-        this.$store.dispatch('view_maps/search', id)
+        this.$store.dispatch('view_maps/search_id', id)
       },
       search_title(event){
         const title = this.searched_title

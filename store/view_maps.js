@@ -24,9 +24,12 @@ export const mutations = {
 }
 
 export const actions = {
-  init: firestoreAction(({ bindFirestoreRef }) => {
-    bindFirestoreRef('all_data', dataRef)
-  }),
+  init: () =>{
+
+  },
+  // init: firestoreAction(({ bindFirestoreRef }) => {
+  //   bindFirestoreRef('all_data', dataRef)
+  // }),
   search: firestoreAction((context, id) => {
     context.commit('clear_searched_data')
     dataRef.where('address_id', '==', id).get()
@@ -71,20 +74,20 @@ export const actions = {
 }
 
 export const getters = {
-  getAllData: state => {
-    return state.all_data
-  },
-  getSearchedData: state => {
-    // return state.all_data.filter(getSearchedData => getSearchedData.title == "蒙古タンメン中本 品川店")
-    // return state.all_data.filter(data => data.title == "蒙古タンメン中本 品川店")
-    let result = state.all_data.find(data => data.title.indexOf("目黒") != -1);
-    console.log(result);
-    return result
-    // return state.all_data.find(data => data.title.indexOf("渋谷") != -1)
-  },
-  getCount: state => {
-    return state.counter
-  },
+  // getAllData: state => {
+  //   return state.all_data
+  // },
+  // getSearchedData: state => {
+  //   // return state.all_data.filter(getSearchedData => getSearchedData.title == "蒙古タンメン中本 品川店")
+  //   // return state.all_data.filter(data => data.title == "蒙古タンメン中本 品川店")
+  //   let result = state.all_data.find(data => data.title.indexOf("目黒") != -1);
+  //   console.log(result);
+  //   return result
+  //   // return state.all_data.find(data => data.title.indexOf("渋谷") != -1)
+  // },
+  // getCount: state => {
+  //   return state.counter
+  // },
   getSearchResult: state => {
     return state.searched_data
   }
